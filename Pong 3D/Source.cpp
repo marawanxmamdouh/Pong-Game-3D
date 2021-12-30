@@ -11,9 +11,9 @@ using namespace std;
 
 GLfloat Cx = 0, Cy = 5, Cz = 4;
 GLfloat red[] = { 1, 0, 0, 1 };
-GLfloat green[] = {0,1,0,1};
-GLfloat blue[] = {0,0,1,1};
-GLfloat mainLightPosition[] = {0,1,0,1};
+GLfloat green[] = { 0,1,0,1 };
+GLfloat blue[] = { 0,0,1,1 };
+GLfloat mainLightPosition[] = { 0,1,0,1 };
 
 GLdouble translateX = 0;
 GLdouble translateY = 0.25 + 0.16;
@@ -52,9 +52,9 @@ GLfloat ballXPos = ballXTranslateValue + ballRadius;
 GLfloat ballZPos = ballZTranslateValue + ballRadius;
 
 //ball max
-GLfloat ballXMinPos = -1.9 + 2.4*ballRadius;
+GLfloat ballXMinPos = -1.9 + 2.4 * ballRadius;
 GLfloat ballXMaxPos = 2 - ballRadius;
-GLfloat ballZMinPos = -1.9 + 3*ballRadius;
+GLfloat ballZMinPos = -1.9 + 3 * ballRadius;
 GLfloat ballZMaxPos = 1.9 - ballRadius;
 
 //ball speed
@@ -173,87 +173,87 @@ void text(GLfloat x, GLfloat y, char s) {
 
 void Draw()
 {
- /*   GLfloat V[8][3] = {
-                            {-0.5, 0.5, 0.5},
-                            { 0.5, 0.5, 0.5},
-                            { 0.5,-0.5, 0.5},
-                            {-0.5,-0.5, 0.5},
-                            {-0.5, 0.5,-0.5},
-                            { 0.5, 0.5,-0.5},
-                            { 0.5,-0.5,-0.5},
-                            {-0.5,-0.5,-0.5}
-    };*/
+    /*   GLfloat V[8][3] = {
+                               {-0.5, 0.5, 0.5},
+                               { 0.5, 0.5, 0.5},
+                               { 0.5,-0.5, 0.5},
+                               {-0.5,-0.5, 0.5},
+                               {-0.5, 0.5,-0.5},
+                               { 0.5, 0.5,-0.5},
+                               { 0.5,-0.5,-0.5},
+                               {-0.5,-0.5,-0.5}
+       };*/
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
-    glLightfv(GL_LIGHT0,GL_POSITION, mainLightPosition);
+    glLightfv(GL_LIGHT0, GL_POSITION, mainLightPosition);
 
     gluLookAt(Cx, Cy, Cz,
-              0, 0, 0,
-              0, 1, 0);
+        0, 0, 0,
+        0, 1, 0);
 
-//    Cube(V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7]);
+    //    Cube(V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7]);
 
-    //TODO Draw plane and color it to green
+        //TODO Draw plane and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
-        glPushMatrix();
-            glScalef(1, 0.08, 1);
-            glutSolidCube(4);
-        glPopMatrix();
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, green);
+    glPushMatrix();
+    glScalef(1, 0.08, 1);
+    glutSolidCube(4);
+    glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Right Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
-        glPushMatrix();
-            glTranslatef(1.9,0.32,0);
-            glScalef(0.05, 0.08, 1);
-            glutSolidCube(4);
-        glPopMatrix();
+    //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
+    glPushMatrix();
+    glTranslatef(1.9, 0.32, 0);
+    glScalef(0.05, 0.08, 1);
+    glutSolidCube(4);
+    glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Left Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
-        glPushMatrix();
-            glTranslatef(-1.9,0.32,0);
-            glScalef(0.05, 0.08, 1);
-            glutSolidCube(4);
-        glPopMatrix();
+    //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
+    glPushMatrix();
+    glTranslatef(-1.9, 0.32, 0);
+    glScalef(0.05, 0.08, 1);
+    glutSolidCube(4);
+    glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Sphere and color it to red
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,red);
-        glPushMatrix();
-            glTranslatef(ballXTranslateValue, translateY, ballZTranslateValue);
-            //glRotatef(rotateDegree,0,0,1);
-            glutSolidSphere(ballRadius,100,100);
-            ballXPos = ballXTranslateValue + ballRadius;
-            ballZPos = ballZTranslateValue + ballRadius;
-        glPopMatrix();
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, red);
+    glPushMatrix();
+    glTranslatef(ballXTranslateValue, translateY, ballZTranslateValue);
+    //glRotatef(rotateDegree,0,0,1);
+    glutSolidSphere(ballRadius, 100, 100);
+    ballXPos = ballXTranslateValue + ballRadius;
+    ballZPos = ballZTranslateValue + ballRadius;
+    glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Top Bar and color it to blue
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,blue);
-        glPushMatrix();
-            glTranslatef(topBarTranslateValue,0.2*1.25,-1.75);
-            glScalef(1, 0.2, 0.2);
-            glutSolidCube(1.25);
-        glPopMatrix();
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blue);
+    glPushMatrix();
+    glTranslatef(topBarTranslateValue, 0.2 * 1.25, -1.75);
+    glScalef(1, 0.2, 0.2);
+    glutSolidCube(1.25);
+    glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Bottom Bar and color it to blue
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,blue);
-        glPushMatrix();
-            glTranslatef(bottomBarTranslateValue,0.2*1.25,1.75);
-            glScalef(1, 0.2, 0.2);
-            glutSolidCube(1.25);
-        glPopMatrix();
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blue);
+    glPushMatrix();
+    glTranslatef(bottomBarTranslateValue, 0.2 * 1.25, 1.75);
+    glScalef(1, 0.2, 0.2);
+    glutSolidCube(1.25);
+    glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Text
@@ -332,14 +332,14 @@ void specialKeys(int key, int x, int y)
         topBarTranslateValue += topBarTranslate;
     }
     //*/
-    else if (key == GLUT_KEY_UP){
+    else if (key == GLUT_KEY_UP) {
         translateZ -= translateValue;
         rotateDegree += rotateValue;
-        }
-    else if (key == GLUT_KEY_DOWN){
+    }
+    else if (key == GLUT_KEY_DOWN) {
         translateZ += translateValue;
         rotateDegree += rotateValue;
-        }
+    }
     else if (key == GLUT_KEY_F1)
         translateY += translateValue;
     else if (key == GLUT_KEY_F2)
