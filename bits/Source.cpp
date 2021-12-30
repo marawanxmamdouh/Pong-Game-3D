@@ -42,7 +42,7 @@ float bottomBarTranslateValue = 0;
 
 
 //Ball
-GLfloat ballRadius = 0.25;
+#define ballRadius 0.25
 GLfloat ballXTranslateValue = 0;
 GLfloat ballYTranslateValue = ballRadius + 0.16;
 GLfloat ballZTranslateValue = 0;
@@ -52,30 +52,15 @@ GLfloat ballXPos = ballXTranslateValue + ballRadius;
 GLfloat ballZPos = ballZTranslateValue + ballRadius;
 
 //ball max
-GLfloat ballXMinPos = -1.9 + 2.5*ballRadius;
+GLfloat ballXMinPos = -1.9 + 2.4*ballRadius;
 GLfloat ballXMaxPos = 2 - ballRadius;
-GLfloat ballZMinPos  ;
-GLfloat ballZMaxPos  ;
+GLfloat ballZMinPos = -1.9 + 3*ballRadius;
+GLfloat ballZMaxPos = 1.9 - ballRadius;
 
 //ball speed
-#define speed 0.01
-GLfloat ballXSpeed = speed;
-GLfloat ballZSpeed = speed;
-
-//
-float xball = 0;
-float yball = 0;
-
-float speed_x = speed;
-float speed_y = speed;
-
-float min_x = 0;
-float max_x = 0;
-float min_y = 0;
-float max_y = 0;
-
-float now_x = 0;
-float now_y = 0;
+#define ballSpeed 0.01
+GLfloat ballXSpeed = ballSpeed;
+GLfloat ballZSpeed = ballSpeed;
 
 int score1 = 0;
 int score2 = 0;
@@ -136,8 +121,6 @@ void timer(int) {
 
     glutTimerFunc(1000 / 60, timer, 0);
 
-    //TODO update timer function
-
     //Move Ball in X Axis
     if (ballXPos >= ballXMaxPos) {
         ballXSpeed = -ballXSpeed;
@@ -147,31 +130,29 @@ void timer(int) {
     }
     ballXTranslateValue += ballXSpeed;
 
-    if (now_y > max_y && (now_x > topBarLeftPos /*-50*/ && now_x < topBarRightPos)/*50*/) {
-        speed_y = -speed_y;
+    //TODO update timer function
+    //Move Ball in Z Axis
+    if (ballZPos <= ballZMinPos &&/*collide with top bar*/(ballXPos > topBarLeftPos && ballXPos < topBarRightPos)) {
+        ballZSpeed = -ballZSpeed;
     }
-    else if (now_y > max_y && !(now_x > topBarLeftPos /*-50*/ && now_x < topBarRightPos)/*50*/) {
+    else if (ballZPos < ballZMinPos &&/*don't collide*/!(ballXPos > topBarLeftPos && ballXPos < topBarRightPos)) {
         if (score1 == 4) {
             x1 = true;
         }
         score1++;
         reset();
     }
-    if (now_y < min_y && (now_x > bottomBarLeftPos && now_x < bottomBarRightPos)) {
-        speed_y = -speed_y;
+    if (ballZPos > ballZMaxPos &&/*collide with bottom bar*/(ballXPos > bottomBarLeftPos && ballXPos < bottomBarRightPos)) {
+        ballZSpeed = -ballZSpeed;
     }
-    else 	if (now_y < min_y && !(now_x > bottomBarLeftPos && now_x < bottomBarRightPos)) {
+    else if (ballZPos > ballZMaxPos && /*don't collide*/!(ballXPos > bottomBarLeftPos && ballXPos < bottomBarRightPos)) {
         if (score2 == 4) {
             x2 = true;
         }
         score2++;
         reset();
     }
-
-    yball += speed_y;
-    //
-//    ballXTranslateValue += speed;
-//    ballZTranslateValue += speed;
+    ballZTranslateValue += ballZSpeed;
 }
 
 void Draw()
@@ -235,6 +216,7 @@ void Draw()
             //glRotatef(rotateDegree,0,0,1);
             glutSolidSphere(ballRadius,100,100);
             ballXPos = ballXTranslateValue + ballRadius;
+            ballZPos = ballZTranslateValue + ballRadius;
         glPopMatrix();
     glPopAttrib();
 
