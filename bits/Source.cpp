@@ -23,6 +23,41 @@ GLdouble translateValue = 0.05;
 GLdouble rotateDegree = 0;
 GLdouble rotateValue = 10;
 
+float xball = 0;
+float yball = 0;
+
+float speed_x = speed;
+float speed_y = speed;
+
+float ballRadius = 17;
+float min_x = 0;
+float max_x = 0;
+float min_y = 0;
+float max_y = 0;
+
+float now_x = 0;
+float now_y = 0;
+
+//upper bar
+float barUP_min_x = -50;
+float barUP_max_x = 50;
+float barUP_translate = 0;
+
+//down bar
+float barDoun_min_x = -50;
+float barDoun_max_x = 50;
+float barDoun_translate = 0;
+
+int score1 = 0;
+int score2 = 0;
+
+bool x1 = false;
+bool x2 = false;
+
+void reset() {
+    xball = 0;
+    yball = 0;
+}
 
 void MyInit()
 {
