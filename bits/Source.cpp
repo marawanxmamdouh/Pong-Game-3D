@@ -193,6 +193,9 @@ void Draw()
 
 void Key(unsigned char key, int x, int y)
 {
+    if (key == 27) {
+        exit(0);
+    }
     if (key == 'a' && bottomBarLeftPos > bottomBarMinX) {
         bottomBarRightPos += -bottomBarTranslate;
         bottomBarLeftPos += -bottomBarTranslate;
