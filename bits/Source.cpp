@@ -58,7 +58,7 @@ GLfloat ballZMinPos = -1.9 + 3*ballRadius;
 GLfloat ballZMaxPos = 1.9 - ballRadius;
 
 //ball speed
-#define ballSpeed 0.01
+#define ballSpeed 0.03
 GLfloat ballXSpeed = ballSpeed;
 GLfloat ballZSpeed = ballSpeed;
 
@@ -155,6 +155,22 @@ void timer(int) {
     ballZTranslateValue += ballZSpeed;
 }
 
+void text(GLfloat x, GLfloat y, const char* s, void* font) {
+    glRasterPos2f(x, y); //define position
+
+    const char* string = s;	 //your text
+
+    while (*string) {
+        glutBitmapCharacter(font, *string++);
+    }
+}
+
+void text(GLfloat x, GLfloat y, char s) {
+
+    glRasterPos2f(x, y); //define position
+    glutBitmapCharacter(GLUT_BITMAP_8_BY_13, 48 + s);
+}
+
 void Draw()
 {
  /*   GLfloat V[8][3] = {
@@ -238,7 +254,27 @@ void Draw()
             glScalef(1, 0.2, 0.2);
             glutSolidCube(1.25);
         glPopMatrix();
-        glPopAttrib();
+    glPopAttrib();
+
+    //TODO Draw Text
+    text(-1.9, 2.9, "player 1 ", GLUT_BITMAP_8_BY_13);
+    text(-1.30, 2.9, score1);
+    text(-1.97, 2.7, "player 2 ", GLUT_BITMAP_8_BY_13);
+    text(-1.36, 2.7, score2);
+
+    if (x1) {
+        glColor3f(1, 1, 1);
+        text(-0.55, 1.20, "Player 1 Win", GLUT_BITMAP_TIMES_ROMAN_24);
+        glColor3f(1, 1, 1);
+        text(-0.70, 0.85, "Press r to Replay", GLUT_BITMAP_9_BY_15);
+    }
+    if (x2) {
+        glColor3f(1, 1, 1);
+        text(-0.55, 1.20, "Player 2 Win", GLUT_BITMAP_TIMES_ROMAN_24);
+        glColor3f(1, 1, 1);
+        text(-0.70, 0.85, "Press r to Replay", GLUT_BITMAP_9_BY_15);
+    }
+
     glutSwapBuffers();
 }
 
@@ -256,6 +292,15 @@ void Key(unsigned char key, int x, int y)
         bottomBarRightPos += bottomBarTranslate;
         bottomBarLeftPos += bottomBarTranslate;
         bottomBarTranslateValue += bottomBarTranslate;
+    }
+    if (key == 'r') {
+        score1 = 0;
+        score2 = 0;
+        ballXSpeed = ballSpeed;
+        ballZSpeed = ballSpeed;
+        x1 = false;
+        x2 = false;
+        glutPostRedisplay();
     }
     switch (key)
     {
