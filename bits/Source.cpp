@@ -207,14 +207,7 @@ void Key(unsigned char ch, int x, int y)
 //TODO Void specialKeys
 void specialKeys(int key, int x, int y)
 {
-//    if (key == GLUT_KEY_RIGHT) {
-//        translateX += translateValue;
-//        rotateDegree += rotateValue;
-//    }
-//    else if (key == GLUT_KEY_LEFT){
-//        translateX -= translateValue;
-//        rotateDegree += rotateValue;
-//}
+    //Top Bar Movement
     if (key == GLUT_KEY_LEFT && topBarLeftPos > topBarMinX) {
         topBarRightPos += -topBarTranslate;
         topBarLeftPos += -topBarTranslate;
@@ -226,6 +219,7 @@ void specialKeys(int key, int x, int y)
         topBarLeftPos += topBarTranslate;
         topBarTranslateValue += topBarTranslate;
     }
+    //*/
     else if (key == GLUT_KEY_UP){
         translateZ -= translateValue;
         rotateDegree += rotateValue;
