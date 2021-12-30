@@ -13,6 +13,15 @@ GLfloat M[] = {0,1,0,1};
 GLfloat Pos[] = {0,1,0,1};
 GLfloat Col[] = {1,0,0,1};
 
+GLdouble translate_x = 0;
+GLdouble translate_y = 0.25;
+GLdouble translate_z = 0;
+GLdouble translateValue = 0.05;
+
+
+GLdouble rotateDegree = 0;
+GLdouble rotateValue = 10;
+
 
 void MyInit()
 {
@@ -87,13 +96,14 @@ void Draw()
         glPopMatrix();
     glPopAttrib();
 
-    //TODO Draw Speare and color it to red
+    //TODO Draw Sphere and color it to red
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,M);
-    glPushMatrix();
-    glScalef(1, 0.08, 1);
-    glutSolidCube(4);
-    glPopMatrix();
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,red);
+        glPushMatrix();
+            glTranslatef(translate_x,translate_y,translate_z);
+            glRotatef(rotateDegree,0,0,1);
+            glutSolidSphere(0.25,100,100);
+        glPopMatrix();
     glPopAttrib();
 
     glutSwapBuffers();
@@ -115,16 +125,42 @@ void Key(unsigned char ch, int x, int y)
     glutPostRedisplay();
 }
 
+void specialKeys(int key, int x, int y)
+{
+    if (key == GLUT_KEY_RIGHT) {
+        translate_x += translateValue;
+        rotateDegree += rotateValue;
+    }
+    else if (key == GLUT_KEY_LEFT){
+        translate_x -= translateValue;
+        rotateDegree += rotateValue;
+}
+    else if (key == GLUT_KEY_UP){
+        translate_z -= translateValue;
+        rotateDegree += rotateValue;
+        }
+    else if (key == GLUT_KEY_DOWN){
+        translate_z += translateValue;
+        rotateDegree += rotateValue;
+        }
+    else if (key == GLUT_KEY_F1)
+        translate_y += translateValue;
+    else if (key == GLUT_KEY_F2)
+        translate_y -= translateValue;
+    glutPostRedisplay();
+}
+
 int main(int argC, char* argV[])
 {
     glutInit(&argC, argV);
     glutInitWindowSize(600, 600);
     glutInitWindowPosition(100, 150);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-    glutCreateWindow("Color Cube with Camera");
+    glutCreateWindow("pong 3d");
     MyInit();
     glutDisplayFunc(Draw);
     glutKeyboardFunc(Key);
+    glutSpecialFunc(specialKeys);
     glutMainLoop();
     return 0;
 }
