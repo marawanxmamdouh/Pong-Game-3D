@@ -96,6 +96,16 @@ void Draw()
         glPopMatrix();
     glPopAttrib();
 
+    //TODO Draw Left Wall and color it to green
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,M);
+        glPushMatrix();
+            glTranslatef(-1.9,0.32,0);
+            glScalef(0.05, 0.08, 1);
+            glutSolidCube(4);
+        glPopMatrix();
+    glPopAttrib();
+
     //TODO Draw Sphere and color it to red
     glPushAttrib(GL_ALL_ATTRIB_BITS);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,red);
