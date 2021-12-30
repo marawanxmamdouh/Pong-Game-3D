@@ -183,7 +183,7 @@ void Draw()
     glPushAttrib(GL_ALL_ATTRIB_BITS);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,blue);
         glPushMatrix();
-            glTranslatef(0,0.2*1.25,1.75);
+            glTranslatef(bottomBarTranslateValue,0.2*1.25,1.75);
             glScalef(1, 0.2, 0.2);
             glutSolidCube(1.25);
         glPopMatrix();
@@ -191,9 +191,19 @@ void Draw()
     glutSwapBuffers();
 }
 
-void Key(unsigned char ch, int x, int y)
+void Key(unsigned char key, int x, int y)
 {
-    switch (ch)
+    if (key == 'a' && bottomBarLeftPos > bottomBarMinX) {
+        bottomBarRightPos += -bottomBarTranslate;
+        bottomBarLeftPos += -bottomBarTranslate;
+        bottomBarTranslateValue += -bottomBarTranslate;
+    }
+    if (key == 'd' && bottomBarRightPos < bottomBarMaxX) {
+        bottomBarRightPos += bottomBarTranslate;
+        bottomBarLeftPos += bottomBarTranslate;
+        bottomBarTranslateValue += bottomBarTranslate;
+    }
+    switch (key)
     {
     case 'x': Cx = Cx - 0.5;   break;
     case 'X': Cx = Cx + 0.5;   break;
