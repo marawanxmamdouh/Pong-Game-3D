@@ -137,6 +137,15 @@ void Draw()
         glPopMatrix();
     glPopAttrib();
 
+    //TODO Draw Bottom Bar and color it to blue
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,blue);
+        glPushMatrix();
+            glTranslatef(0,0.2*1.25,1.75);
+            glScalef(1, 0.2, 0.2);
+            glutSolidCube(1.25);
+        glPopMatrix();
+        glPopAttrib();
     glutSwapBuffers();
 }
 
