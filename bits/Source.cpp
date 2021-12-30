@@ -46,15 +46,21 @@ GLfloat ballRadius = 0.25;
 GLfloat ballXTranslateValue = 0;
 GLfloat ballYTranslateValue = ballRadius + 0.16;
 GLfloat ballZTranslateValue = 0;
+
+//ball positions
 GLfloat ballXPos = ballXTranslateValue + ballRadius;
 GLfloat ballZPos = ballZTranslateValue + ballRadius;
 
 //ball max
-GLfloat ballXMinPos = -1.8 + ballRadius;
-GLfloat ballXMaxPos = 1.8 - ballRadius;
+GLfloat ballXMinPos = -1.9 + 2.5*ballRadius;
+GLfloat ballXMaxPos = 2 - ballRadius;
 GLfloat ballZMinPos  ;
 GLfloat ballZMaxPos  ;
+
+//ball speed
 #define speed 0.01
+GLfloat ballXSpeed = speed;
+GLfloat ballZSpeed = speed;
 
 //
 float xball = 0;
@@ -130,13 +136,16 @@ void timer(int) {
 
     glutTimerFunc(1000 / 60, timer, 0);
 
-    if (now_x > max_x) {
-        speed_x = -speed_x;
+    //TODO update timer function
+
+    //Move Ball in X Axis
+    if (ballXPos >= ballXMaxPos) {
+        ballXSpeed = -ballXSpeed;
     }
-    else if (now_x < min_x) {
-        speed_x = -speed_x;
+    else if (ballXPos <= ballXMinPos) {
+        ballXSpeed = -ballXSpeed;
     }
-    xball += speed_x;
+    ballXTranslateValue += ballXSpeed;
 
     if (now_y > max_y && (now_x > topBarLeftPos /*-50*/ && now_x < topBarRightPos)/*50*/) {
         speed_y = -speed_y;
@@ -161,8 +170,8 @@ void timer(int) {
 
     yball += speed_y;
     //
-    //ballXTranslateValue += speed;
-    //ballZTranslateValue += speed;
+//    ballXTranslateValue += speed;
+//    ballZTranslateValue += speed;
 }
 
 void Draw()
@@ -225,6 +234,7 @@ void Draw()
             glTranslatef(ballXTranslateValue, translateY, ballZTranslateValue);
             //glRotatef(rotateDegree,0,0,1);
             glutSolidSphere(ballRadius,100,100);
+            ballXPos = ballXTranslateValue + ballRadius;
         glPopMatrix();
     glPopAttrib();
 
