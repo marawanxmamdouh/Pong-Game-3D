@@ -32,9 +32,12 @@ float topBarTranslate = 0.05;
 float topBarTranslateValue = 0;
 
 //Bottom Bar
-float barDoun_min_x = -50;
-float barDoun_max_x = 50;
-float barDoun_translate = 0;
+float bottomBarMinX = -1.9;
+float bottomBarMaxX = 1.9;
+float bottomBarRightPos = 0.75;
+float bottomBarLeftPos = -0.75;
+float bottomBarTranslate = 0.05;
+float bottomBarTranslateValue = 0;
 
 //
 float xball = 0;
