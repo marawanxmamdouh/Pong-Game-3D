@@ -23,6 +23,17 @@ GLdouble translateValue = 0.05;
 GLdouble rotateDegree = 0;
 GLdouble rotateValue = 10;
 
+//Top Bar
+float topBarMinX = -50;
+float topBarMaxX = 50;
+float topBarTranslate = 0;
+
+//Bottom Bar
+float barDoun_min_x = -50;
+float barDoun_max_x = 50;
+float barDoun_translate = 0;
+
+//
 float xball = 0;
 float yball = 0;
 
@@ -37,16 +48,6 @@ float max_y = 0;
 
 float now_x = 0;
 float now_y = 0;
-
-//upper bar
-float barUP_min_x = -50;
-float barUP_max_x = 50;
-float barUP_translate = 0;
-
-//down bar
-float barDoun_min_x = -50;
-float barDoun_max_x = 50;
-float barDoun_translate = 0;
 
 int score1 = 0;
 int score2 = 0;
