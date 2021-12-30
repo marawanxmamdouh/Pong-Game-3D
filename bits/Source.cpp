@@ -43,10 +43,11 @@ float bottomBarTranslateValue = 0;
 float xball = 0;
 float yball = 0;
 
-//float speed_x = speed;
-//float speed_y = speed;
+#define speed 0.05
+float speed_x = speed;
+float speed_y = speed;
 
-float ballRadius = 17;
+float ballRadius = 0.25;
 float min_x = 0;
 float max_x = 0;
 float min_y = 0;
@@ -106,6 +107,46 @@ void Cube(GLfloat V0[], GLfloat V1[], GLfloat V2[], GLfloat V3[], GLfloat V4[], 
     Square(V0, V1, V5, V4);
 }
 
+void timer(int) {
+
+    if (!x1 && !x2) {
+        glutPostRedisplay();
+    }
+
+    glutTimerFunc(1000 / 60, timer, 0);
+
+    if (now_x > max_x) {
+        speed_x = -speed_x;
+    }
+    else if (now_x < min_x) {
+        speed_x = -speed_x;
+    }
+    xball += speed_x;
+
+    if (now_y > max_y && (now_x > topBarLeftPos /*-50*/ && now_x < topBarRightPos)/*50*/) {
+        speed_y = -speed_y;
+    }
+    else if (now_y > max_y && !(now_x > topBarLeftPos /*-50*/ && now_x < topBarRightPos)/*50*/) {
+        if (score1 == 4) {
+            x1 = true;
+        }
+        score1++;
+        reset();
+    }
+    if (now_y < min_y && (now_x > bottomBarLeftPos && now_x < bottomBarRightPos)) {
+        speed_y = -speed_y;
+    }
+    else 	if (now_y < min_y && !(now_x > bottomBarLeftPos && now_x < bottomBarRightPos)) {
+        if (score2 == 4) {
+            x2 = true;
+        }
+        score2++;
+        reset();
+    }
+
+    yball += speed_y;
+}
+
 void Draw()
 {
  /*   GLfloat V[8][3] = {
@@ -163,7 +204,7 @@ void Draw()
     glPushAttrib(GL_ALL_ATTRIB_BITS);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,red);
         glPushMatrix();
-            glTranslatef(translateX,translateY,translateZ);
+            glTranslatef(now_x,translateY,now_y);
             glRotatef(rotateDegree,0,0,1);
             glutSolidSphere(0.25,100,100);
         glPopMatrix();
@@ -261,6 +302,7 @@ int main(int argC, char* argV[])
     glutCreateWindow("pong 3d");
     MyInit();
     glutDisplayFunc(Draw);
+    glutTimerFunc(0, timer, 0);
     glutKeyboardFunc(Key);
     glutSpecialFunc(specialKeys);
     glutMainLoop();
