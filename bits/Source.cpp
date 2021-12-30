@@ -11,6 +11,7 @@
 GLfloat Cx = 0, Cy = 5, Cz = 4;
 GLfloat red[] = { 1, 0, 0, 1 };
 GLfloat green[] = {0,1,0,1};
+GLfloat blue[] = {0,0,1,1};
 GLfloat mainLightPosition[] = {0,1,0,1};
 
 GLdouble translateX = 0;
@@ -123,6 +124,16 @@ void Draw()
             glTranslatef(translateX,translateY,translateZ);
             glRotatef(rotateDegree,0,0,1);
             glutSolidSphere(0.25,100,100);
+        glPopMatrix();
+    glPopAttrib();
+
+    //TODO Draw Top Bar and color it to blue
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,blue);
+        glPushMatrix();
+            glTranslatef(0,0.2*1.25,-1.75);
+            glScalef(1, 0.2, 0.2);
+            glutSolidCube(1.25);
         glPopMatrix();
     glPopAttrib();
 
