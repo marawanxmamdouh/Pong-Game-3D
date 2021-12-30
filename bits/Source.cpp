@@ -54,12 +54,12 @@ GLfloat ballXMinPos = -1.8 + ballRadius;
 GLfloat ballXMaxPos = 1.8 - ballRadius;
 GLfloat ballZMinPos  ;
 GLfloat ballZMaxPos  ;
+#define speed 0.01
 
 //
 float xball = 0;
 float yball = 0;
 
-#define speed 0.01
 float speed_x = speed;
 float speed_y = speed;
 
@@ -78,8 +78,8 @@ bool x1 = false;
 bool x2 = false;
 
 void reset() {
-    xball = 0;
-    yball = 0;
+    ballXTranslateValue = 0;
+    ballZTranslateValue = 0;
 }
 
 void MyInit()
