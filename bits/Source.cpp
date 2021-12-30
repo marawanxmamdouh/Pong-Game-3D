@@ -24,9 +24,12 @@ GLdouble rotateDegree = 0;
 GLdouble rotateValue = 10;
 
 //Top Bar
-float topBarMinX = -50;
-float topBarMaxX = 50;
-float topBarTranslate = 0;
+float topBarMinX = -1.9;
+float topBarMaxX = 1.9;
+float topBarRightPos = 0.75;
+float topBarLeftPos = -0.75;
+float topBarTranslate = 0.05;
+float topBarTranslateValue = 0;
 
 //Bottom Bar
 float barDoun_min_x = -50;
@@ -37,8 +40,8 @@ float barDoun_translate = 0;
 float xball = 0;
 float yball = 0;
 
-float speed_x = speed;
-float speed_y = speed;
+//float speed_x = speed;
+//float speed_y = speed;
 
 float ballRadius = 17;
 float min_x = 0;
@@ -167,7 +170,7 @@ void Draw()
     glPushAttrib(GL_ALL_ATTRIB_BITS);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,blue);
         glPushMatrix();
-            glTranslatef(0,0.2*1.25,-1.75);
+            glTranslatef(topBarTranslateValue,0.2*1.25,-1.75);
             glScalef(1, 0.2, 0.2);
             glutSolidCube(1.25);
         glPopMatrix();
@@ -204,14 +207,25 @@ void Key(unsigned char ch, int x, int y)
 //TODO Void specialKeys
 void specialKeys(int key, int x, int y)
 {
-    if (key == GLUT_KEY_RIGHT) {
-        translateX += translateValue;
-        rotateDegree += rotateValue;
+//    if (key == GLUT_KEY_RIGHT) {
+//        translateX += translateValue;
+//        rotateDegree += rotateValue;
+//    }
+//    else if (key == GLUT_KEY_LEFT){
+//        translateX -= translateValue;
+//        rotateDegree += rotateValue;
+//}
+    if (key == GLUT_KEY_LEFT && topBarLeftPos > topBarMinX) {
+        topBarRightPos += -topBarTranslate;
+        topBarLeftPos += -topBarTranslate;
+        topBarTranslateValue += -topBarTranslate;
+
     }
-    else if (key == GLUT_KEY_LEFT){
-        translateX -= translateValue;
-        rotateDegree += rotateValue;
-}
+    else if (key == GLUT_KEY_RIGHT && topBarRightPos < topBarMaxX) {
+        topBarRightPos += topBarTranslate;
+        topBarLeftPos += topBarTranslate;
+        topBarTranslateValue += topBarTranslate;
+    }
     else if (key == GLUT_KEY_UP){
         translateZ -= translateValue;
         rotateDegree += rotateValue;
