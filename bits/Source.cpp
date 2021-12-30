@@ -4,18 +4,18 @@
 #include<math.h>
 #include<iostream>
 
+//GLfloat blue[] = { 56/255, 148/255, 255/255, 1.0 };
+//GLfloat green[] = { 103/255, 180/255, 71/255, 1.0 };
+//GLfloat green[] = { 0.4, 0.7, 0.28, 1 };
+
 GLfloat Cx = 0, Cy = 5, Cz = 4;
 GLfloat red[] = { 1, 0, 0, 1 };
-GLfloat blue[] = { 56/255, 148/255, 255/255, 1.0 };
-//GLfloat green[] = { 103/255, 180/255, 71/255, 1.0 };
-GLfloat green[] = { 0.4, 0.7, 0.28, 1 };
-GLfloat M[] = {0,1,0,1};
-GLfloat Pos[] = {0,1,0,1};
-GLfloat Col[] = {1,0,0,1};
+GLfloat green[] = {0,1,0,1};
+GLfloat mainLightPosition[] = {0,1,0,1};
 
-GLdouble translate_x = 0;
-GLdouble translate_y = 0.25;
-GLdouble translate_z = 0;
+GLdouble translateX = 0;
+GLdouble translateY = 0.25;
+GLdouble translateZ = 0;
 GLdouble translateValue = 0.05;
 
 
@@ -79,7 +79,7 @@ void Draw()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glLoadIdentity();
-    glLightfv(GL_LIGHT0,GL_POSITION,Pos);
+    glLightfv(GL_LIGHT0,GL_POSITION, mainLightPosition);
 
     gluLookAt(Cx, Cy, Cz,
               0, 0, 0,
@@ -89,7 +89,7 @@ void Draw()
 
     //TODO Draw plane and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,M);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
         glPushMatrix();
             glScalef(1, 0.08, 1);
             glutSolidCube(4);
@@ -98,7 +98,7 @@ void Draw()
 
     //TODO Draw Right Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,M);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
         glPushMatrix();
             glTranslatef(1.9,0.32,0);
             glScalef(0.05, 0.08, 1);
@@ -108,7 +108,7 @@ void Draw()
 
     //TODO Draw Left Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,M);
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
         glPushMatrix();
             glTranslatef(-1.9,0.32,0);
             glScalef(0.05, 0.08, 1);
@@ -120,7 +120,7 @@ void Draw()
     glPushAttrib(GL_ALL_ATTRIB_BITS);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,red);
         glPushMatrix();
-            glTranslatef(translate_x,translate_y,translate_z);
+            glTranslatef(translateX,translateY,translateZ);
             glRotatef(rotateDegree,0,0,1);
             glutSolidSphere(0.25,100,100);
         glPopMatrix();
@@ -145,31 +145,33 @@ void Key(unsigned char ch, int x, int y)
     glutPostRedisplay();
 }
 
+//TODO Void specialKeys
 void specialKeys(int key, int x, int y)
 {
     if (key == GLUT_KEY_RIGHT) {
-        translate_x += translateValue;
+        translateX += translateValue;
         rotateDegree += rotateValue;
     }
     else if (key == GLUT_KEY_LEFT){
-        translate_x -= translateValue;
+        translateX -= translateValue;
         rotateDegree += rotateValue;
 }
     else if (key == GLUT_KEY_UP){
-        translate_z -= translateValue;
+        translateZ -= translateValue;
         rotateDegree += rotateValue;
         }
     else if (key == GLUT_KEY_DOWN){
-        translate_z += translateValue;
+        translateZ += translateValue;
         rotateDegree += rotateValue;
         }
     else if (key == GLUT_KEY_F1)
-        translate_y += translateValue;
+        translateY += translateValue;
     else if (key == GLUT_KEY_F2)
-        translate_y -= translateValue;
+        translateY -= translateValue;
     glutPostRedisplay();
 }
 
+//TODO Main
 int main(int argC, char* argV[])
 {
     glutInit(&argC, argV);
