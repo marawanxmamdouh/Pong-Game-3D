@@ -4,7 +4,7 @@
 #include<math.h>
 #include<iostream>
 using namespace std;
-
+#define windowSize 600
 //GLfloat blue[] = { 56/255, 148/255, 255/255, 1.0 };
 //GLfloat green[] = { 103/255, 180/255, 71/255, 1.0 };
 //GLfloat green[] = { 0.4, 0.7, 0.28, 1 };
@@ -351,8 +351,9 @@ void specialKeys(int key, int x, int y)
 int main(int argC, char* argV[])
 {
     glutInit(&argC, argV);
-    glutInitWindowSize(600, 600);
-    glutInitWindowPosition(100, 150);
+    glutInitWindowSize(windowSize, windowSize);
+    glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH) - windowSize) / 2,
+        (glutGet(GLUT_SCREEN_HEIGHT) - windowSize) / 2);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
     glutCreateWindow("pong 3d");
     MyInit();
