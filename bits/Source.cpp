@@ -15,7 +15,7 @@ GLfloat blue[] = {0,0,1,1};
 GLfloat mainLightPosition[] = {0,1,0,1};
 
 GLdouble translateX = 0;
-GLdouble translateY = 0.25+0.16;
+GLdouble translateY = 0.25 + 0.16;
 GLdouble translateZ = 0;
 GLdouble translateValue = 0.05;
 
