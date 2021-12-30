@@ -3,6 +3,7 @@
 #include<glut.h>
 #include<math.h>
 #include<iostream>
+using namespace std;
 
 //GLfloat blue[] = { 56/255, 148/255, 255/255, 1.0 };
 //GLfloat green[] = { 103/255, 180/255, 71/255, 1.0 };
@@ -39,15 +40,29 @@ float bottomBarLeftPos = -0.75;
 float bottomBarTranslate = 0.05;
 float bottomBarTranslateValue = 0;
 
+
+//Ball
+GLfloat ballRadius = 0.25;
+GLfloat ballXTranslateValue = 0;
+GLfloat ballYTranslateValue = ballRadius + 0.16;
+GLfloat ballZTranslateValue = 0;
+GLfloat ballXPos = ballXTranslateValue + ballRadius;
+GLfloat ballZPos = ballZTranslateValue + ballRadius;
+
+//ball max
+GLfloat ballXMinPos = -1.8 + ballRadius;
+GLfloat ballXMaxPos = 1.8 - ballRadius;
+GLfloat ballZMinPos  ;
+GLfloat ballZMaxPos  ;
+
 //
 float xball = 0;
 float yball = 0;
 
-#define speed 0.05
+#define speed 0.01
 float speed_x = speed;
 float speed_y = speed;
 
-float ballRadius = 0.25;
 float min_x = 0;
 float max_x = 0;
 float min_y = 0;
@@ -145,6 +160,9 @@ void timer(int) {
     }
 
     yball += speed_y;
+    //
+    //ballXTranslateValue += speed;
+    //ballZTranslateValue += speed;
 }
 
 void Draw()
@@ -182,7 +200,7 @@ void Draw()
 
     //TODO Draw Right Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
+        //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
         glPushMatrix();
             glTranslatef(1.9,0.32,0);
             glScalef(0.05, 0.08, 1);
@@ -192,7 +210,7 @@ void Draw()
 
     //TODO Draw Left Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
+        //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
         glPushMatrix();
             glTranslatef(-1.9,0.32,0);
             glScalef(0.05, 0.08, 1);
@@ -204,9 +222,9 @@ void Draw()
     glPushAttrib(GL_ALL_ATTRIB_BITS);
         glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,red);
         glPushMatrix();
-            glTranslatef(now_x,translateY,now_y);
-            glRotatef(rotateDegree,0,0,1);
-            glutSolidSphere(0.25,100,100);
+            glTranslatef(ballXTranslateValue, translateY, ballZTranslateValue);
+            //glRotatef(rotateDegree,0,0,1);
+            glutSolidSphere(ballRadius,100,100);
         glPopMatrix();
     glPopAttrib();
 
