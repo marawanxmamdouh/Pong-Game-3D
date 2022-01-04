@@ -13,6 +13,8 @@ GLfloat Cx = 0, Cy = 5, Cz = 4;
 GLfloat red[] = { 1, 0, 0, 1 };
 GLfloat green[] = { 0,1,0,1 };
 GLfloat blue[] = { 0,0,1,1 };
+GLfloat yellow[] = { 1,1,0,1 };
+GLfloat black[] = { 0,0,0,1 };
 GLfloat mainLightPosition[] = { 0,1,0,1 };
 
 GLdouble translateX = 0;
@@ -24,12 +26,13 @@ GLdouble translateValue = 0.05;
 GLdouble rotateDegree = 0;
 GLdouble rotateValue = 10;
 
+#define barSpeed 0.1
 //Top Bar
 float topBarMinX = -1.9;
 float topBarMaxX = 1.9;
 float topBarRightPos = 0.75;
 float topBarLeftPos = -0.75;
-float topBarTranslate = 0.05;
+float topBarTranslate = barSpeed;
 float topBarTranslateValue = 0;
 
 //Bottom Bar
@@ -37,7 +40,7 @@ float bottomBarMinX = -1.9;
 float bottomBarMaxX = 1.9;
 float bottomBarRightPos = 0.75;
 float bottomBarLeftPos = -0.75;
-float bottomBarTranslate = 0.05;
+float bottomBarTranslate = barSpeed;
 float bottomBarTranslateValue = 0;
 
 
@@ -58,9 +61,13 @@ GLfloat ballZMinPos = -1.9 + 3 * ballRadius;
 GLfloat ballZMaxPos = 1.9 - ballRadius;
 
 //ball speed
-#define ballSpeed 0.03
+#define ballSpeed 0.025
 GLfloat ballXSpeed = ballSpeed;
 GLfloat ballZSpeed = ballSpeed;
+
+//Temporary Speed
+GLfloat ballXTemporarySpeed = 0;
+GLfloat ballZTemporarySpeed = 0;
 
 int score1 = 0;
 int score2 = 0;
@@ -75,7 +82,7 @@ void reset() {
 
 void MyInit()
 {
-    glClearColor(0, 0, 0, 1);
+    glClearColor(0.2, 0.2, 0.2, 1);
     glEnable(GL_DEPTH_TEST);
 
     glMatrixMode(GL_PROJECTION);
@@ -195,7 +202,7 @@ void Draw()
 
     //    Cube(V[0], V[1], V[2], V[3], V[4], V[5], V[6], V[7]);
 
-        //TODO Draw plane and color it to green
+    //TODO Draw plane and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, green);
     glPushMatrix();
@@ -206,7 +213,7 @@ void Draw()
 
     //TODO Draw Right Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,black);
     glPushMatrix();
     glTranslatef(1.9, 0.32, 0);
     glScalef(0.05, 0.08, 1);
@@ -216,7 +223,7 @@ void Draw()
 
     //TODO Draw Left Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    //glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,green);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
     glPushMatrix();
     glTranslatef(-1.9, 0.32, 0);
     glScalef(0.05, 0.08, 1);
@@ -226,7 +233,7 @@ void Draw()
 
     //TODO Draw Sphere and color it to red
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, red);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, yellow);
     glPushMatrix();
     glTranslatef(ballXTranslateValue, translateY, ballZTranslateValue);
     //glRotatef(rotateDegree,0,0,1);
@@ -248,7 +255,7 @@ void Draw()
 
     //TODO Draw Bottom Bar and color it to blue
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blue);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, red);
     glPushMatrix();
     glTranslatef(bottomBarTranslateValue, 0.2 * 1.25, 1.75);
     glScalef(1, 0.2, 0.2);
@@ -302,18 +309,38 @@ void Key(unsigned char key, int x, int y)
         x2 = false;
         glutPostRedisplay();
     }
+    
+    if(key == ' ') {
+        if (ballXSpeed == 0) {
+            ballXSpeed = ballXTemporarySpeed;
+            ballXTemporarySpeed = 0;
+        }
+        else if (ballXSpeed != 0 ) {
+            ballXTemporarySpeed = ballXSpeed;
+            ballXSpeed = 0;
+        }
+        if (ballZSpeed == 0) {
+           ballZSpeed = ballZTemporarySpeed;
+           ballZTemporarySpeed = 0;
+        }
+        else if (ballZSpeed != 0 ) {
+            ballZTemporarySpeed = ballZSpeed;
+            ballZSpeed = 0;
+        }
+    }
+
     switch (key)
     {
-    case 'x': Cx = Cx - 0.5;   break;
-    case 'X': Cx = Cx + 0.5;   break;
+        case 'x': Cx = Cx - 0.5;   break;
+        case 'X': Cx = Cx + 0.5;   break;
 
-    case 'y': Cy = Cy - 0.5;   break;
-    case 'Y': Cy = Cy + 0.5;   break;
+        case 'y': Cy = Cy - 0.5;   break;
+        case 'Y': Cy = Cy + 0.5;   break;
 
-    case 'z': Cz = Cz - 0.5;   break;
-    case 'Z': Cz = Cz + 0.5;   break;
+        case 'z': Cz = Cz - 0.5;   break;
+        case 'Z': Cz = Cz + 0.5;   break;
+        glutPostRedisplay();
     }
-    glutPostRedisplay();
 }
 
 //TODO Void specialKeys
@@ -324,27 +351,57 @@ void specialKeys(int key, int x, int y)
         topBarRightPos += -topBarTranslate;
         topBarLeftPos += -topBarTranslate;
         topBarTranslateValue += -topBarTranslate;
-
     }
+
     else if (key == GLUT_KEY_RIGHT && topBarRightPos < topBarMaxX) {
         topBarRightPos += topBarTranslate;
         topBarLeftPos += topBarTranslate;
         topBarTranslateValue += topBarTranslate;
     }
+
     //*/
     else if (key == GLUT_KEY_UP) {
         translateZ -= translateValue;
         rotateDegree += rotateValue;
-    }
-    else if (key == GLUT_KEY_DOWN) {
+    } else if (key == GLUT_KEY_DOWN) {
         translateZ += translateValue;
         rotateDegree += rotateValue;
-    }
-    else if (key == GLUT_KEY_F1)
+    } else if (key == GLUT_KEY_F1) {
         translateY += translateValue;
-    else if (key == GLUT_KEY_F2)
+    }
+    else if (key == GLUT_KEY_F2) {
         translateY -= translateValue;
+    }
     glutPostRedisplay();
+    if (key == GLUT_KEY_PAGE_DOWN) {
+        if (ballXSpeed > 0 && ballXSpeed != ballSpeed) {
+            ballXSpeed -= 0.005;
+        }
+        else if (ballXSpeed < 0 && ballXSpeed != -ballSpeed) {
+            ballXSpeed += 0.005;
+        }
+        if (ballZSpeed > 0 && ballZSpeed != 1) {
+            ballZSpeed -= 0.005;
+        }
+        else if (ballZSpeed < 0 && ballZSpeed != -1) {
+            ballZSpeed += 0.005;
+        }
+    }
+
+    if (key == GLUT_KEY_PAGE_UP) {
+        if (ballXSpeed > 0 && ballXSpeed != -ballSpeed) {
+            ballXSpeed += 0.005;
+        }
+        else if (ballXSpeed < 0 && ballXSpeed != ballSpeed) {
+            ballXSpeed -= 0.005;
+        }
+        if (ballZSpeed > 0 && ballXSpeed != -ballSpeed) {
+            ballZSpeed += 0.005;
+        }
+        else if (ballZSpeed < 0 && ballXSpeed != ballSpeed) {
+            ballZSpeed -= 0.005;
+        }
+    }
 }
 
 //TODO Main
