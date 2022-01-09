@@ -1,15 +1,13 @@
-#include<windows.h>
-#include<GL/glu.h>
 #include<glut.h>
-#include<math.h>
 #include<iostream>
-using namespace std;
+
+
 #define windowSize 600
-//GLfloat blue[] = { 56/255, 148/255, 255/255, 1.0 };
-//GLfloat green[] = { 103/255, 180/255, 71/255, 1.0 };
-//GLfloat green[] = { 0.4, 0.7, 0.28, 1 };
+
 
 GLfloat Cx = 0, Cy = 5, Cz = 4;
+
+
 GLfloat red[] = { 1, 0, 0, 1 };
 GLfloat green[] = { 0,1,0,1 };
 GLfloat blue[] = { 0,0,1,1 };
@@ -19,11 +17,10 @@ GLfloat mainLightPosition[] = { 0,1,0,1 };
 
 GLdouble translateX = 0;
 GLdouble translateY = 0.25 + 0.16;
-GLdouble translateZ = 0;
 GLdouble translateValue = 0.05;
 
 
-GLdouble rotateDegree = 0;
+GLdouble rotateDegree = 10;
 GLdouble rotateValue = 10;
 
 #define barSpeed 0.1
@@ -88,8 +85,8 @@ void MyInit()
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glFrustum(-1, 1, -1, 1, 2, 10);
-    glMatrixMode(GL_MODELVIEW);
 
+    glMatrixMode(GL_MODELVIEW);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 }
@@ -137,7 +134,6 @@ void timer(int) {
     }
     ballXTranslateValue += ballXSpeed;
 
-    //TODO update timer function
     //Move Ball in Z Axis
     if (ballZPos <= ballZMinPos &&/*collide with top bar*/(ballXPos > topBarLeftPos && ballXPos < topBarRightPos)) {
         ballZSpeed = -ballZSpeed;
@@ -204,63 +200,63 @@ void Draw()
 
     //TODO Draw plane and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, green);
-    glPushMatrix();
-    glScalef(1, 0.08, 1);
-    glutSolidCube(4);
-    glPopMatrix();
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, green);
+        glPushMatrix();
+            glScalef(1, 0.08, 1);
+            glutSolidCube(4);
+        glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Right Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE,black);
-    glPushMatrix();
-    glTranslatef(1.9, 0.32, 0);
-    glScalef(0.05, 0.08, 1);
-    glutSolidCube(4);
-    glPopMatrix();
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
+        glPushMatrix();
+            glTranslatef(1.9, 0.32, 0);
+            glScalef(0.05, 0.08, 1);
+            glutSolidCube(4);
+        glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Left Wall and color it to green
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
-    glPushMatrix();
-    glTranslatef(-1.9, 0.32, 0);
-    glScalef(0.05, 0.08, 1);
-    glutSolidCube(4);
-    glPopMatrix();
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, black);
+        glPushMatrix();
+            glTranslatef(-1.9, 0.32, 0);
+            glScalef(0.05, 0.08, 1);
+            glutSolidCube(4);
+        glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Sphere and color it to red
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, yellow);
-    glPushMatrix();
-    glTranslatef(ballXTranslateValue, translateY, ballZTranslateValue);
-    //glRotatef(rotateDegree,0,0,1);
-    glutSolidSphere(ballRadius, 100, 100);
-    ballXPos = ballXTranslateValue + ballRadius;
-    ballZPos = ballZTranslateValue + ballRadius;
-    glPopMatrix();
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, yellow);
+        glPushMatrix();
+            glTranslatef(ballXTranslateValue, translateY, ballZTranslateValue);
+            glRotatef(rotateDegree,0,0,1);
+            glutSolidSphere(ballRadius, 100, 100);
+            ballXPos = ballXTranslateValue + ballRadius;
+            ballZPos = ballZTranslateValue + ballRadius;
+        glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Top Bar and color it to blue
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blue);
-    glPushMatrix();
-    glTranslatef(topBarTranslateValue, 0.2 * 1.25, -1.75);
-    glScalef(1, 0.2, 0.2);
-    glutSolidCube(1.25);
-    glPopMatrix();
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, blue);
+        glPushMatrix();
+            glTranslatef(topBarTranslateValue, 0.2 * 1.25, -1.75);
+            glScalef(1, 0.2, 0.2);
+            glutSolidCube(1.25);
+        glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Bottom Bar and color it to blue
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, red);
-    glPushMatrix();
-    glTranslatef(bottomBarTranslateValue, 0.2 * 1.25, 1.75);
-    glScalef(1, 0.2, 0.2);
-    glutSolidCube(1.25);
-    glPopMatrix();
+        glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, red);
+        glPushMatrix();
+            glTranslatef(bottomBarTranslateValue, 0.2 * 1.25, 1.75);
+            glScalef(1, 0.2, 0.2);
+            glutSolidCube(1.25);
+        glPopMatrix();
     glPopAttrib();
 
     //TODO Draw Text
@@ -307,23 +303,24 @@ void Key(unsigned char key, int x, int y)
         ballZSpeed = ballSpeed;
         x1 = false;
         x2 = false;
+        reset();
         glutPostRedisplay();
     }
-    
-    if(key == ' ') {
+
+    if (key == ' ') {
         if (ballXSpeed == 0) {
             ballXSpeed = ballXTemporarySpeed;
             ballXTemporarySpeed = 0;
         }
-        else if (ballXSpeed != 0 ) {
+        else if (ballXSpeed != 0) {
             ballXTemporarySpeed = ballXSpeed;
             ballXSpeed = 0;
         }
         if (ballZSpeed == 0) {
-           ballZSpeed = ballZTemporarySpeed;
-           ballZTemporarySpeed = 0;
+            ballZSpeed = ballZTemporarySpeed;
+            ballZTemporarySpeed = 0;
         }
-        else if (ballZSpeed != 0 ) {
+        else if (ballZSpeed != 0) {
             ballZTemporarySpeed = ballZSpeed;
             ballZSpeed = 0;
         }
@@ -339,7 +336,6 @@ void Key(unsigned char key, int x, int y)
 
         case 'z': Cz = Cz - 0.5;   break;
         case 'Z': Cz = Cz + 0.5;   break;
-        glutPostRedisplay();
     }
 }
 
@@ -359,20 +355,16 @@ void specialKeys(int key, int x, int y)
         topBarTranslateValue += topBarTranslate;
     }
 
-    //*/
-    else if (key == GLUT_KEY_UP) {
-        translateZ -= translateValue;
-        rotateDegree += rotateValue;
-    } else if (key == GLUT_KEY_DOWN) {
-        translateZ += translateValue;
-        rotateDegree += rotateValue;
-    } else if (key == GLUT_KEY_F1) {
+    //Move ball in Y Axis
+    else if (key == GLUT_KEY_F1) {
         translateY += translateValue;
     }
     else if (key == GLUT_KEY_F2) {
         translateY -= translateValue;
     }
     glutPostRedisplay();
+
+
     if (key == GLUT_KEY_PAGE_DOWN) {
         if (ballXSpeed > 0 && ballXSpeed != ballSpeed) {
             ballXSpeed -= 0.005;
@@ -380,10 +372,10 @@ void specialKeys(int key, int x, int y)
         else if (ballXSpeed < 0 && ballXSpeed != -ballSpeed) {
             ballXSpeed += 0.005;
         }
-        if (ballZSpeed > 0 && ballZSpeed != 1) {
+        if (ballZSpeed > 0 && ballZSpeed != ballSpeed) {
             ballZSpeed -= 0.005;
         }
-        else if (ballZSpeed < 0 && ballZSpeed != -1) {
+        else if (ballZSpeed < 0 && ballZSpeed != -ballSpeed) {
             ballZSpeed += 0.005;
         }
     }
@@ -412,7 +404,7 @@ int main(int argC, char* argV[])
     glutInitWindowPosition((glutGet(GLUT_SCREEN_WIDTH) - windowSize) / 2,
         (glutGet(GLUT_SCREEN_HEIGHT) - windowSize) / 2);
     glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
-    glutCreateWindow("pong 3d");
+    glutCreateWindow("Pong 3D");
     MyInit();
     glutDisplayFunc(Draw);
     glutTimerFunc(0, timer, 0);
